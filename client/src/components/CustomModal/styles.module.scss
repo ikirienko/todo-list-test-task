@@ -1,0 +1,18 @@
+.container {
+  .paper {
+    border-radius: 15px;
+  }
+
+  & > div > div {
+    width: 40%;
+    max-width: 500px;
+    padding: 40px;
+    position: relative;
+    overflow: initial;
+    & > .close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+  }
+}

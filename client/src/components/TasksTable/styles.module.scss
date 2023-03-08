@@ -1,0 +1,47 @@
+.tasksTable {
+  margin-top: 20px;
+
+  &__container {
+    &__table {
+      &__head {
+        th {
+          font-weight: 600;
+          background-color: rgba(25, 118, 210, 0.04);
+        }
+      }
+      &__body {
+        &__row {
+          &__update:hover {
+            cursor: pointer;
+            background-color: rgb(250, 250, 250);
+          }
+        }
+      }
+    }
+  }
+
+  &__spinnerContainer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__status {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    &__edited-icon {
+      padding: 5px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #757575;
+    }
+  }
+
+  &__popover {
+    padding: 5px;
+  }
+}

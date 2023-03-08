@@ -1,0 +1,9 @@
+.index-page {
+  padding: 40px;
+
+  &__button {
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: flex-end;
+  }
+}

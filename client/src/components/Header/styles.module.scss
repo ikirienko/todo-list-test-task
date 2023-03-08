@@ -1,0 +1,25 @@
+.header {
+  &__content {
+    height: 50px;
+    padding-top: 5px;
+    padding-right: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    &__logged {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+
+      &__login {
+        font-weight: 600;
+        font-style: italic;
+      }
+    }
+  }
+
+  & hr {
+    border: 1px solid rgba(50, 48, 65, 0.1);
+  }
+}
