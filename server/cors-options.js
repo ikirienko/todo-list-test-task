@@ -1,4 +1,8 @@
-const allowedOrigins = ["http://localhost:3000", "http://localhost:3001"];
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:3001",
+  "https://todo-list-test-task-production.up.railway.app",
+];
 
 const corsOptions = {
   origin: (origin, callback) => {
