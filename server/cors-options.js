@@ -4,6 +4,8 @@ const allowedOrigins = [
   "https://todo-list-test-task-production.up.railway.app",
   "https://todo-list-test-task-production-f900.up.railway.app",
   "https://todo-list-test-task-7egqk3ewz-ikirienko.vercel.app",
+  "todo-list-test-task-lake.vercel.app",
+  "vercel.app",
 ];
 
 const corsOptions = {
