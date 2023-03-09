@@ -243,6 +243,11 @@ const TasksTable = () => {
                 </TableRow>
               )
             )}
+            {!tasks.length && (
+              <TableRow className={styles["tasksTable__emptyRow"]}>
+                <TableCell colSpan={4}>Нет данных</TableCell>
+              </TableRow>
+            )}
             {fetching && (
               <TableRow key="row-spinner">
                 <TableCell colSpan={4}>
