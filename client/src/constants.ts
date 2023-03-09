@@ -15,3 +15,7 @@ export enum SortBy {
   DONE = "done",
 }
 export const DEFAULT_SORT_BY = SortBy.USER_NAME;
+
+export const ErrorMessages: Record<string, string> = {
+  "invalid login or password": "Неверный логин или пароль",
+};

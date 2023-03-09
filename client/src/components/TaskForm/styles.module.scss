@@ -15,6 +15,10 @@
       display: flex;
       gap: 20px;
       justify-content: flex-end;
+
+      &__delete {
+        margin-right: auto;
+      }
     }
   }
 }

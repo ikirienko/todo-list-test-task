@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import cn from "classnames";
 import {
   CircularProgress,
@@ -18,7 +18,6 @@ import OutlinedFlagRoundedIcon from "@mui/icons-material/OutlinedFlagRounded";
 
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 
-import styles from "./styles.module.scss";
 import { tasksActions } from "../../redux/slices/tasksSlice";
 import {
   getTasksThunk,
@@ -33,6 +32,8 @@ import {
 import { uiActions } from "../../redux/slices/uiSlice";
 import { toast } from "react-toastify";
 import { isAdmin } from "../../utils";
+import TablePaginationActions from "../TablePaginationActions/TablePaginationActions";
+import styles from "./styles.module.scss";
 
 interface ITableHeadCell {
   id: SortBy;
@@ -74,7 +75,6 @@ const TableHeadCellList: ITableHeadCell[] = [
     id: SortBy.DONE,
     name: "Статус",
     props: {
-      // align: "center",
       style: {
         width: "10%",
       },
@@ -83,7 +83,6 @@ const TableHeadCellList: ITableHeadCell[] = [
 ];
 
 const TasksTable = () => {
-  console.log("render TasksTable");
   const {
     result: tasks,
     message: tasksTableMessage,
@@ -101,12 +100,10 @@ const TasksTable = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    console.log("useEffect TasksTable");
     dispatch(getTasksThunk());
   }, []);
 
   useEffect(() => {
-    console.log("useEffect TasksTable Message", message);
     if (message) {
       toast.error(message);
       dispatch(tasksActions.clearMessage("tasksTable"));
@@ -164,7 +161,6 @@ const TasksTable = () => {
               {TableHeadCellList.map(({ id, name, props }) => (
                 <TableCell
                   key={id}
-                  // align="center"
                   sortDirection={sortBy === id ? sortOrder : DEFAULT_SORT_ORDER}
                   {...props}
                 >
@@ -266,6 +262,7 @@ const TasksTable = () => {
         rowsPerPage={ROWS_PER_PAGE}
         page={page}
         onPageChange={handleChangePage}
+        ActionsComponent={TablePaginationActions}
       />
       <Popover
         id="mouse-over-popover"

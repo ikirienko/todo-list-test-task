@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Button, Checkbox, FormControlLabel, TextField } from "@mui/material";
 import { useFormik } from "formik";
 
@@ -16,36 +16,28 @@ import { uiActions } from "../../redux/slices/uiSlice";
 import { tasksActions } from "../../redux/slices/tasksSlice";
 import { toast } from "react-toastify";
 import { isAdmin } from "../../utils";
+import { deleteTaskThunk } from "../../redux/slices/tasksSlice/asyncActions";
 
 const TaskForm = () => {
-  console.log("render TaskForm");
   const createMessage = useAppSelector((state) => state.TASKS.create.message);
   const updateMessage = useAppSelector((state) => state.TASKS.update.message);
-  const message = createMessage || updateMessage;
+  const { message: deleteMessage, fetching: deletePending } = useAppSelector(
+    (state) => state.TASKS.delete
+  );
+  const message = createMessage || updateMessage || deleteMessage;
   const selectedTask = useAppSelector(
     (state) => state.TASKS.update.selectedTask
   );
-  console.log("selectedTask", selectedTask);
   const user = useAppSelector((state) => state.AUTH.user);
   const dispatch = useAppDispatch();
 
-  //   useEffect(() => {
-  //     dispatch(tasksActions.clearMessage("create"));
-  //     dispatch(tasksActions.clearMessage("update"));
-  //     return () => {
-  //       console.log("Clear useEffect TaskForm");
-  //       dispatch(tasksActions.clearMessage("create"));
-  //       dispatch(tasksActions.clearMessage("update"));
-  //     };
-  //   }, []);
-
   useEffect(() => {
-    console.log("useEffect TaskForm Message:", message);
     if (message) {
       toast.error(message);
 
       dispatch(tasksActions.clearMessage("create"));
       dispatch(tasksActions.clearMessage("update"));
+      dispatch(tasksActions.clearMessage("delete"));
     }
   }, [message]);
 
@@ -112,10 +104,24 @@ const TaskForm = () => {
           />
         )}
         <div className={styles["task-form__form__buttons"]}>
+          {!!selectedTask && (
+            <div className={styles["task-form__form__buttons__delete"]}>
+              <Button
+                color="error"
+                type="button"
+                disabled={isSubmitting || deletePending}
+                onClick={() => {
+                  dispatch(deleteTaskThunk(selectedTask.id));
+                }}
+              >
+                Удалить
+              </Button>
+            </div>
+          )}
           <Button
             color="primary"
             type="button"
-            disabled={isSubmitting}
+            disabled={isSubmitting || deletePending}
             onClick={() => {
               dispatch(uiActions.hideModal());
               setTimeout(
@@ -130,7 +136,7 @@ const TaskForm = () => {
             color="primary"
             variant="contained"
             type="submit"
-            disabled={isSubmitting}
+            disabled={isSubmitting || deletePending}
           >
             Создать
           </Button>

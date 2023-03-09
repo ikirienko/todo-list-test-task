@@ -12,19 +12,16 @@ import {
 
 import {
   initDetail,
+  initFetch,
   initList,
   onFulfilledReducer,
   onPendingReducer,
   onRejectedReducer,
 } from "../../reducers";
-import {
-  TasksStateDraft,
-  ITasksState,
-  ReducersNames,
-  ITask,
-} from "../../types";
+import { TasksStateDraft, ITasksState, ReducersNames } from "../../types";
 import {
   createTaskThunk,
+  deleteTaskThunk,
   getTasksThunk,
   updateTaskThunk,
 } from "./asyncActions";
@@ -43,6 +40,9 @@ const initialState: ITasksState = {
   update: {
     selectedTask: null,
     ...initDetail,
+  },
+  delete: {
+    ...initFetch,
   },
 };
 
@@ -70,7 +70,7 @@ export const tasksSlice = createSlice({
     },
     clearMessage(
       state,
-      action: PayloadAction<"tasksTable" | "create" | "update">
+      action: PayloadAction<"tasksTable" | "create" | "update" | "delete">
     ) {
       state[action.payload].message = null;
     },
@@ -128,6 +128,19 @@ export const tasksSlice = createSlice({
       .addCase(
         updateTaskThunk.rejected,
         onRejectedReducer<TasksStateDraft>("update")
+      )
+
+      .addCase(
+        deleteTaskThunk.pending,
+        onPendingReducer<TasksStateDraft>("delete")
+      )
+      .addCase(
+        deleteTaskThunk.fulfilled,
+        onFulfilledReducer<TasksStateDraft>("delete")
+      )
+      .addCase(
+        deleteTaskThunk.rejected,
+        onRejectedReducer<TasksStateDraft>("delete")
       );
   },
 });

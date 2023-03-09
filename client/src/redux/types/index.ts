@@ -60,6 +60,7 @@ export type ITasksState = StateType & {
   update: {
     selectedTask: ITask | null;
   } & Detail<ICreateTaskResponse>;
+  delete: FetchStatus;
 };
 
 export type TasksStateDraft = WritableDraft<ITasksState>;

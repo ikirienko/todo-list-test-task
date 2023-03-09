@@ -11,34 +11,25 @@ import {
   validationSchema,
 } from "./utils";
 
-import styles from "./styles.module.scss";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { ErrorMessages } from "../../constants";
+import styles from "./styles.module.scss";
 
 const LoginForm = () => {
   const { message } = useAppSelector((state) => state.AUTH.login);
   const user = useAppSelector((state) => state.AUTH.user);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(authActions.clearMessage("login"));
   }, []);
 
   useEffect(() => {
-    console.log("useEffect Login Message", message);
     if (message) {
-      toast.error(message);
+      toast.error(ErrorMessages[message.toLowerCase()] || message);
       dispatch(authActions.clearMessage("login"));
     }
   }, [message]);
-
-  //   useEffect(() => {
-  //     console.log("useEffect Login User", user);
-  //     if (user) {
-  //       navigate("/");
-  //     }
-  //   }, [user]);
 
   const formik = useFormik({
     initialValues: loginFormInitialValues,

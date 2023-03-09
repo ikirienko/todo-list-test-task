@@ -100,7 +100,48 @@ export const updateTaskThunk = createAsyncThunk(
       if (message.toLowerCase().startsWith("unauthorized")) {
         toast.success("Нет доступа к операции");
         thunkAPI.dispatch(logoutThunk());
-        console.log("Navigate to login");
+        router.navigate("/login", { replace: true });
+        return thunkAPI.rejectWithValue(null);
+      }
+
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const deleteTaskThunk = createAsyncThunk(
+  `${ReducersNames.TASKS}/delete`,
+  async (id: number, thunkAPI) => {
+    try {
+      const token = (thunkAPI.getState() as RootState).AUTH.token;
+      const response = await api.deleteTask(id, token);
+
+      if (response.status === 200) {
+        if ((thunkAPI.getState() as RootState).UI.modal.isOpen) {
+          thunkAPI.dispatch(uiActions.hideModal());
+          setTimeout(
+            () => thunkAPI.dispatch(tasksActions.setSelectedTask(null)),
+            200
+          );
+          toast.success("Задача удалена");
+        }
+
+        thunkAPI.dispatch(getTasksThunk());
+        return response.data;
+      }
+
+      return thunkAPI.rejectWithValue(
+        JSON.stringify(response) ?? "Unknown error"
+      );
+    } catch (e: any) {
+      const message =
+        (e as AxiosError<{ message: string }>)?.response?.data ??
+        e?.message ??
+        JSON.stringify(e);
+
+      if (message.toLowerCase().startsWith("unauthorized")) {
+        toast.success("Нет доступа к операции");
+        thunkAPI.dispatch(logoutThunk());
         router.navigate("/login", { replace: true });
         return thunkAPI.rejectWithValue(null);
       }

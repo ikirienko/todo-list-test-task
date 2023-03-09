@@ -48,6 +48,16 @@ const updateTask = async (
     },
   });
 
+const deleteTask = async (
+  id: number,
+  token: string
+): Promise<AxiosResponse<any>> =>
+  await apiInstance.delete(`/tasks/${id}`, {
+    headers: {
+      Authorization: token,
+    },
+  });
+
 export default {
   login,
   logout,
@@ -55,4 +65,5 @@ export default {
   getTasks,
   createTask,
   updateTask,
+  deleteTask,
 };
