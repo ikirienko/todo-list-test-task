@@ -42,9 +42,7 @@ const TaskForm = () => {
   }, [message]);
 
   const formik = useFormik({
-    initialValues: selectedTask
-      ? selectedTask
-      : { ...taskFormInitialValues, userName: user?.name ?? "" },
+    initialValues: selectedTask ? selectedTask : taskFormInitialValues,
     validationSchema: validationSchema,
     onSubmit: selectedTask
       ? getHandleSubmitFormOnUpdate(selectedTask.id)
