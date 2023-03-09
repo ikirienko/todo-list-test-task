@@ -3,8 +3,8 @@ const allowedOrigins = [
   "http://localhost:3001",
   "https://todo-list-test-task-production.up.railway.app",
   "https://todo-list-test-task-production-f900.up.railway.app",
-  "http://todo-list-test-task-lake.vercel.app",
-  "http://vercel.app",
+  "https://todo-list-test-task-lake.vercel.app",
+  "https://vercel.app",
 ];
 
 const corsOptions = {
