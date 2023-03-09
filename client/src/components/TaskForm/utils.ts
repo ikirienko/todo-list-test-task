@@ -16,7 +16,11 @@ export type ITaskFormValues = Pick<
 
 export const validationSchema = yup.object({
   userName: yup.string().trim().required("Введите имя пользователя"),
-  email: yup.string().trim().email().required("Введите email"),
+  email: yup
+    .string()
+    .trim()
+    .email("Некорректный email")
+    .required("Введите email"),
   text: yup.string().trim().required("Введите текст задачи"),
 });
 

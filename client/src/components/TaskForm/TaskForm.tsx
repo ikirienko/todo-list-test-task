@@ -136,7 +136,7 @@ const TaskForm = () => {
             type="submit"
             disabled={isSubmitting || deletePending}
           >
-            Создать
+            Сохранить
           </Button>
         </div>
       </form>
